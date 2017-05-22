@@ -122,4 +122,6 @@ def punchOut(a_list, *args):
                 punchOut(v, 1)
         print('')
 
-# punchOut(my_list)
+
+if __name__ == '__main__':
+    punchOut(my_list)

@@ -107,23 +107,6 @@ my_list = [
 ]
 
 
-def sourceToadSort(a_list, sort_key, *args):
-    if not args:
-        first_keys = []
-        first_values = []
-        sort_key_values = []
-    for dict in a_list:
-        if not args:
-            first_keys.append(dict.keys()[0])
-        if sort_key in dict.keys() and type(dict[sort_key]) != list:
-            print(dict[sort_key])
-        else:
-            for key in dict.keys():
-                if type(dict[key]) == list:
-                    sourceToadSort(dict[key], sort_key, 1)
-
-# sourceToadSort(my_list, 'account_id')
-
 def getValue(dict, sort_key):
     if sort_key in dict.keys() and type(dict[sort_key]) != list:
         return dict[sort_key]
@@ -132,7 +115,6 @@ def getValue(dict, sort_key):
             if type(dict[key]) == list and sort_key in dict[key][0].keys():
                 return getValue(dict[key][0], sort_key)
 
-# print getValue(my_list[0], 'ship_code')
 
 def mySort(a_list, sort_key):
     first_keys = []
@@ -161,6 +143,6 @@ def mySort(a_list, sort_key):
 
     return sorted_list
 
-
-
-punchOut(mySort(my_list, 'booking_number')) 
+#used punchOut function from 1st part of assessment
+if __name__ == '__main__':
+    punchOut(mySort(my_list, 'booking_number'))
