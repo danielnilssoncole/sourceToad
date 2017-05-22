@@ -122,4 +122,4 @@ def punchOut(a_list, *args):
                 punchOut(v, 1)
         print('')
 
-punchOut(my_list)
+# punchOut(my_list)

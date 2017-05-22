@@ -6,6 +6,7 @@
 #  i.e. sort by last_name AND/OR sort by account_id )
 #  HINT: Recursion is your friend
 
+from sourceToadPunchOut import punchOut
 from operator import itemgetter
 
 my_list = [
@@ -106,13 +107,60 @@ my_list = [
 ]
 
 
-def sourceToadSort(a_list, sort_key):
+def sourceToadSort(a_list, sort_key, *args):
+    if not args:
+        first_keys = []
+        first_values = []
+        sort_key_values = []
     for dict in a_list:
+        if not args:
+            first_keys.append(dict.keys()[0])
         if sort_key in dict.keys() and type(dict[sort_key]) != list:
             print(dict[sort_key])
         else:
             for key in dict.keys():
                 if type(dict[key]) == list:
-                    sourceToadSort(dict[key], sort_key)
+                    sourceToadSort(dict[key], sort_key, 1)
 
-sourceToadSort(my_list, 'account_id')
+# sourceToadSort(my_list, 'account_id')
+
+def getValue(dict, sort_key):
+    if sort_key in dict.keys() and type(dict[sort_key]) != list:
+        return dict[sort_key]
+    else:
+        for key in dict.keys():
+            if type(dict[key]) == list and sort_key in dict[key][0].keys():
+                return getValue(dict[key][0], sort_key)
+
+# print getValue(my_list[0], 'ship_code')
+
+def mySort(a_list, sort_key):
+    first_keys = []
+    first_values = []
+    sort_key_values = []
+    tuples = []
+    sorted_list = []
+
+    for dict in a_list:
+        first_key = dict.keys()[0]
+        first_value = dict[dict.keys()[0]]
+        sort_key_value = getValue(dict, sort_key)
+
+        first_keys.append(first_key)
+        first_values.append(first_value)
+        sort_key_values.append(sort_key_value)
+
+        tuples.append((first_key, first_value, sort_key_value))
+
+    s_tuples = sorted(tuples, key=itemgetter(2))
+
+    for tup in s_tuples:
+        for dict in a_list:
+            if dict[tup[0]] == tup[1]:
+                sorted_list.append(dict)
+
+    return sorted_list
+
+
+
+punchOut(mySort(my_list, 'booking_number')) 
