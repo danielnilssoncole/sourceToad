@@ -8,10 +8,6 @@
 
 from operator import itemgetter
 
-def sourceToadSort(a_list, sort_by):
-    print('')
-
-
 my_list = [
 {
     'guest_id': 177,
@@ -108,3 +104,15 @@ my_list = [
     }]
 }
 ]
+
+
+def sourceToadSort(a_list, sort_key):
+    for dict in a_list:
+        if sort_key in dict.keys() and type(dict[sort_key]) != list:
+            print(dict[sort_key])
+        else:
+            for key in dict.keys():
+                if type(dict[key]) == list:
+                    sourceToadSort(dict[key], sort_key)
+
+sourceToadSort(my_list, 'account_id')
