@@ -4,17 +4,25 @@
 # for easy display to the user.
 
 
-def punchOut(a_list):
+def punchOut(a_list, *args):
+    #call this function with only one input. ex: punchOut(my_list) .
+    #do not call the funciton with any additional arguments.
+    #optional arguments are used in the recursion step of the function
+    #for proper tabbing when displaying lower levels of the list of dictionaries
+    if len(args) > 0 and args[0] == 1:
+        tabs = '\t'
+    else:
+        tabs = ''
     for dict in a_list:
         nested = [i for i in dict.values() if type(i) == list]
         if len(nested) > 0:
             print('{}{}'.format('*'*75,'\n'))
         for k,v in dict.items():
             if type(v) != list:
-                print('\t{} : {}'.format(k,v))
+                print('\t{}{} : {}'.format(tabs, k, v))
             else:
-                print('\n\t{}: {}'.format(k,'[{}]'))
-                punchOut(v)
+                print('\n\t{}'.format(k))
+                punchOut(v, 1)
         print('')
 
 my_list = [
