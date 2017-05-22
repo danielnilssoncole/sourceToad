@@ -1,3 +1,4 @@
+# Python 2.7.11
 # Given the above list/dictionary again.
 # Write a python function/method to sort
 # the top level array elements based on
@@ -143,6 +144,25 @@ def mySort(a_list, sort_key):
 
     return sorted_list
 
-#used punchOut function from 1st part of assessment to print nicely 
+
+#using function from first part of assessment to print nicely
+def punchOut(a_list, *args):
+    if len(args) > 0 and args[0] == 1:
+        tabs = '\t'
+    else:
+        tabs = ''
+    for dict in a_list:
+        nested = [i for i in dict.values() if type(i) == list]
+        if len(nested) > 0:
+            print('{}{}'.format('*'*75,'\n'))
+        for k,v in dict.items():
+            if type(v) != list:
+                print('\t{}{} : {}'.format(tabs, k, v))
+            else:
+                print('\n\t{}'.format(k))
+                punchOut(v, 1)
+        print('')
+
+#used punchOut function from 1st part of assessment to print nicely
 if __name__ == '__main__':
     punchOut(mySort(my_list, 'booking_number'))

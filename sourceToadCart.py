@@ -1,5 +1,4 @@
-from __future__ import unicode_literals
-
+# Python 2.7.11
 
 class Customer:
     def __init__(self, first_name, last_name, address_1, address_2, city, state, zip):
@@ -27,7 +26,15 @@ class Item:
 class Cart:
     def __init__(self, customer):
         self.customer = customer
+        self.address_1 = customer.address_1
+        self.address_2 = customer.address_2
+        self.city = customer.city
+        self.state = customer.state
+        self.zip = customer.zip
         self.contents = []
+        self.tax_rate = .07
+        self.shipping_rate = .10
+
 
     def add_item(self, item):
         if item.id not in [c.id for c in self.contents]:
@@ -41,8 +48,25 @@ class Cart:
         for c in self.contents:
             print(' id: {1}{0} name: {2}{0} quantity: {3}{0} price: {4}{0}'.format('\n', c.id, c.name, c.quantity, c.price))
 
-    def get_address(self):
-        self.customer.print_address()
+    def print_address(self):
+        print('{0}{1}{0}{2}{0}{3}, {4} {5}{0}'.format('\n', self.address_1, self.address_2, self.city, self.state, self.zip))
+
+    def set_cost(self, item, cost):
+        if item.id in [c.id for c in self.contents]:
+            item.price = cost
+
+    def show_subtotal(self):
+        self.subtotal = 0
+        if len(self.contents) > 0:
+            for item in self.contents:
+                self.subtotal += item.price * item.quantity
+            print self.subtotal
+
+    def show_total(self):
+        if self.subtotal:
+            self.total = self.subtotal * (1 + self.tax_rate + self.shipping_rate)
+            print self.total
+
 
 
 #requirements from assessment
@@ -73,7 +97,13 @@ cart1.print_items()
 
 
 # - Where Order Ships
-cart1.get_address()
+cart1.print_address()
 
 # - Cost of item in cart - including shipping and tax
+cart1.set_cost(i2, 60)
+cart1.print_items()
+
+
 # - Subtotal and total for all items
+cart1.show_subtotal()
+cart1.show_total()
